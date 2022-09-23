@@ -30,7 +30,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void SetDialect()
         {
-            var type = typeof(TConnection).FullName?.ToLowerInvariant();
+            string type = typeof(TConnection).FullName?.ToLowerInvariant();
             if (string.IsNullOrEmpty(type))
             {
                 SqlDialect = SqlDialect.MsSql;
@@ -69,13 +69,13 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         public IUnitOfWork UnitOfWork()
         {
-            var uow= _factory.Create<IUnitOfWork>(_factory, this);
+            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this);
             return uow;
         }
 
         public IUnitOfWork UnitOfWork(IsolationLevel isolationLevel)
         {
-            var uow = _factory.Create<IUnitOfWork>(_factory, this, isolationLevel);
+            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this, isolationLevel);
             return uow;
         }
 

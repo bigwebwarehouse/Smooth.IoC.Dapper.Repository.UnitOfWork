@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using Smooth.IoC.UnitOfWork.Interfaces;
 
 #pragma warning disable 618
@@ -21,24 +22,35 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
         {
             _factory = factory;
         }
-
-        [Obsolete("Use will commit on disposal")]
+        
         public void Commit()
         {
-            if (Connection?.State == ConnectionState.Open && !TransactionCompleted)
+            if (Connection?.State != ConnectionState.Open || TransactionCompleted)
+                return;
+
+            try
             {
                 Transaction?.Commit();
                 _hasCommitted = true;
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+            finally
+            {
+                Transaction?.Dispose();
             }
         }
 
         public void Rollback()
         {
-            if (Connection?.State == ConnectionState.Open && !TransactionCompleted)
-            {
-                Transaction?.Rollback();
-                _hasRolledBack = true;
-            }
+            if (Connection?.State != ConnectionState.Open || TransactionCompleted) 
+                return;
+
+            Transaction?.Rollback();
+            _hasRolledBack = true;
         }
 
         ~DbTransaction()
@@ -54,32 +66,27 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void Dispose(bool disposing)
         {
+            if (Disposed) 
+                return;
 
-            if (Disposed) return;
             Disposed = true;
-            if (!disposing) return;
+
+            if (!disposing)
+                return;
+
             DisposeTransaction();
             DisposeSessionIfSessionIsNotNull();
         }
 
         private void DisposeTransaction()
         {
-            if (Transaction?.Connection == null) return;
-            try
-            {
-                Commit();
-                Transaction?.Dispose();
-            }
-            catch
-            {
-                Rollback();
-                throw;
-            }
-            finally
-            {
-                Transaction = null;
-                _factory.Release(this);
-            }
+            if (Transaction?.Connection == null) 
+                return;
+
+            Rollback(); // Added to ensure uncommitted transactions are rolled back
+            Transaction?.Dispose();
+            Transaction = null;
+            _factory.Release(this);
         }
 
         private void DisposeSessionIfSessionIsNotNull()
