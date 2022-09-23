@@ -118,9 +118,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Smooth.IoC.Dapper.Repository.UnitOfWork\Smooth.IoC.Dapper.Repository.UnitOfWork.csproj">
+    <ProjectReference Include="..\..\src\Smooth.IoC.Repository.UnitOfWork\Smooth.IoC.Repository.UnitOfWork.csproj">
       <Project>{f1eef8c6-5fc2-447b-8a79-7f4890c2c3a1}</Project>
-      <Name>Smooth.IoC.Dapper.Repository.UnitOfWork</Name>
+      <Name>Smooth.IoC.Repository.UnitOfWork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

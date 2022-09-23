@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Dapper.FastCrud.Mappings;
 using Smooth.IoC.Repository.UnitOfWork.Containers;
 using Smooth.IoC.UnitOfWork.Exceptions;
 using Smooth.IoC.Repository.UnitOfWork.Helpers;
@@ -34,8 +36,8 @@ namespace Smooth.IoC.Repository.UnitOfWork
                 }
             }
 
-            var keys = _container.GetKeys<TEntity>();
-            var properties = _container.GetProperties<TEntity>(keys);
+            PropertyMapping[] keys = _container.GetKeys<TEntity>();
+            IEnumerable<PropertyInfo> properties = _container.GetProperties<TEntity>(keys);
             if (keys == null || properties == null)
             {
                 throw new NoPkException(
@@ -54,7 +56,7 @@ namespace Smooth.IoC.Repository.UnitOfWork
                     return entityInterface.Id;
                 }
             }
-            var primaryKeyValue = GetPrimaryKeyPropertyInfo();
+            PropertyInfo primaryKeyValue = GetPrimaryKeyPropertyInfo();
             return (TPk) primaryKeyValue.GetValue(entity);
         }
         protected void SetPrimaryKeyValue(TEntity entity, TPk value)
@@ -67,28 +69,28 @@ namespace Smooth.IoC.Repository.UnitOfWork
                     return;
                 }
             }
-            var primaryKeyValue = GetPrimaryKeyPropertyInfo();
+            PropertyInfo primaryKeyValue = GetPrimaryKeyPropertyInfo();
             primaryKeyValue.SetValue(entity, value);
         }
 
         private PropertyInfo GetPrimaryKeyPropertyInfo()
         {
-            var keys = _container.GetKeys<TEntity>();
-            var primaryKeyName = keys.FirstOrDefault(key => key.IsPrimaryKey)?.PropertyName;
-            var properties = _container.GetProperties<TEntity>(keys);
+            PropertyMapping[] keys = _container.GetKeys<TEntity>();
+            string primaryKeyName = keys.FirstOrDefault(key => key.IsPrimaryKey)?.PropertyName;
+            IEnumerable<PropertyInfo> properties = _container.GetProperties<TEntity>(keys);
             if (keys == null || primaryKeyName == null || properties == null)
             {
                 throw new NoPkException(
                     "There is no primary ket for this entity, please create your logic or add a key attribute to the entity");
             }
-            var primaryKeyValue =
+            PropertyInfo primaryKeyValue =
                 properties.FirstOrDefault(property => property.Name.Equals(primaryKeyName, StringComparison.Ordinal));
             return primaryKeyValue;
         }
 
         protected TEntity CreateEntityAndSetKeyValue(TPk key)
         {
-            var entity = CreateInstanceHelper.Resolve<TEntity>();
+            TEntity entity = CreateInstanceHelper.Resolve<TEntity>();
             SetPrimaryKeyValue(entity, key);
             return entity;
         }

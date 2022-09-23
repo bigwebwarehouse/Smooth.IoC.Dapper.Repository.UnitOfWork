@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<TargetFrameworks>net4;net452;net461;net471;netstandard1.6;netstandard2.0</TargetFrameworks>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
+	<!--<TargetFrameworks>net4;net452;net461;net471;netstandard1.6;netstandard2.0</TargetFrameworks>-->
+	<Version>0.6.0</Version>
     <PackageId>Smooth.IoC.UnitOfWork</PackageId>
-    <Version>0.5.0</Version>
-    <Authors>Rik Svendsen Rose</Authors>
+	<Authors>Rik Svendsen Rose, James Winstanley</Authors>
     <Company>GAIT</Company>
     <Product>Smooth.IoC.UnitOfWork</Product>
 	<Summary>Smooth IoC UnitOfWork pattern.</Summary>
@@ -20,13 +20,16 @@
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/generik0/Smooth.IoC.Dapper.Repository.UnitOfWork</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Generik0/Smooth.IoC.Dapper.Repository.UnitOfWork/master/logo.jpg</PackageIconUrl>
-    <RepositoryUrl>https://github.com/generik0/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
+	<RepositoryUrl>https://github.com/james-winstanley/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
     <PackageTags>dapper orm sql sqlite mysql mssql localdb postgresql poco unitofwork di ioc autofac castle ninject simpleinjector structuremap unity</PackageTags>
     <NeutralLanguage></NeutralLanguage>
-    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net4' ">
+  <ItemGroup>
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+  </ItemGroup>
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net4' ">
     <Reference Include="System.Data" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,6 +87,6 @@
     <PackageReference Include="System.Data.Common">
       <Version>4.3.0</Version>
     </PackageReference>
-  </ItemGroup>
+  </ItemGroup>-->
   
 </Project>

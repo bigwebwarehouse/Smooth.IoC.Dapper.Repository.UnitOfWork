@@ -25,7 +25,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void SetDialect()
         {
-            var type = typeof(TConnection).FullName.ToLowerInvariant();
+            string type = typeof(TConnection).FullName.ToLowerInvariant();
             if (type.Contains(".sqlconnection") || type.Contains(".sqlceconnection") || type.Contains(".sqlclient"))
             {
                 SqlDialect = SqlDialect.MsSql;

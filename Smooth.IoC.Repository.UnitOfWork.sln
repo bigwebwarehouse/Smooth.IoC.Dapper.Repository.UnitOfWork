@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.IoC.UnitOfWork", "src\Smooth.IoC.UnitOfWork\Smooth.IoC.UnitOfWork.csproj", "{F27E79E3-E258-4E63-B999-EF76E3A78B47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.IoC.Dapper.Repository.UnitOfWork", "src\Smooth.IoC.Dapper.Repository.UnitOfWork\Smooth.IoC.Dapper.Repository.UnitOfWork.csproj", "{F1EEF8C6-5FC2-447B-8A79-7F4890C2C3A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.IoC.Repository.UnitOfWork", "src\Smooth.IoC.Repository.UnitOfWork\Smooth.IoC.Repository.UnitOfWork.csproj", "{F1EEF8C6-5FC2-447B-8A79-7F4890C2C3A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smooth.IoC.Dapper.Repository.UnitOfWork.Tests", "test\Smooth.IoC.Dapper.Repository.UnitOfWork.Tests\Smooth.IoC.Dapper.Repository.UnitOfWork.Tests.csproj", "{6872809C-8759-4B48-A743-AC858B5D916C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{279390C0-F78D-429E-BC2C-3CD24F7D4904}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F06EA8D2-F029-4B29-ABDE-3EBF0EB9D38F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smooth.IoC.Repository.UnitOfWork.Tests", "tests\Smooth.IoC.Repository.UnitOfWork.Tests\Smooth.IoC.Repository.UnitOfWork.Tests.csproj", "{6872809C-8759-4B48-A743-AC858B5D916C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +34,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F27E79E3-E258-4E63-B999-EF76E3A78B47} = {279390C0-F78D-429E-BC2C-3CD24F7D4904}
+		{F1EEF8C6-5FC2-447B-8A79-7F4890C2C3A1} = {279390C0-F78D-429E-BC2C-3CD24F7D4904}
+		{6872809C-8759-4B48-A743-AC858B5D916C} = {F06EA8D2-F029-4B29-ABDE-3EBF0EB9D38F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DE60BFA-2367-450A-8C89-B24709B9107B}
