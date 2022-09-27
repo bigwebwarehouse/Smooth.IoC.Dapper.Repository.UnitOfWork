@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Smooth.IoC.UnitOfWork.Interfaces;
+using System;
 using System.Data;
-using System.Data.Common;
-using Smooth.IoC.UnitOfWork.Interfaces;
 
 #pragma warning disable 618
 
@@ -38,15 +37,11 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
                 Rollback();
                 throw;
             }
-            finally
-            {
-                Transaction?.Dispose();
-            }
         }
 
         public void Rollback()
         {
-            if (Connection?.State != ConnectionState.Open || TransactionCompleted) 
+            if (Connection?.State != ConnectionState.Open || TransactionCompleted)
                 return;
 
             Transaction?.Rollback();
@@ -66,7 +61,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void Dispose(bool disposing)
         {
-            if (Disposed) 
+            if (Disposed)
                 return;
 
             Disposed = true;
@@ -80,13 +75,20 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void DisposeTransaction()
         {
-            if (Transaction?.Connection == null) 
-                return;
+            try
+            {
+                if (Transaction?.Connection == null)
+                    return;
 
-            Rollback(); // Added to ensure uncommitted transactions are rolled back
-            Transaction?.Dispose();
-            Transaction = null;
-            _factory.Release(this);
+                // Added to ensure uncommitted transactions are rolled back
+                Rollback();
+            }
+            finally
+            {
+                Transaction?.Dispose();
+                Transaction = null;
+                _factory.Release(this);
+            }
         }
 
         private void DisposeSessionIfSessionIsNotNull()
