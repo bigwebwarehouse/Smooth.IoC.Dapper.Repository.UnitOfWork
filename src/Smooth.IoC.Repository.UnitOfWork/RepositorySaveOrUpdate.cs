@@ -5,9 +5,9 @@ using Smooth.IoC.UnitOfWork.Interfaces;
 
 namespace Smooth.IoC.Repository.UnitOfWork
 {
-    public abstract partial class Repository< TEntity, TPk> 
+    public abstract partial class Repository<TEntity, TPk>
         where TEntity : class
-        where TPk : IComparable 
+        where TPk : IComparable
     {
         public virtual TPk SaveOrUpdate(TEntity entity, IUnitOfWork uow)
         {
@@ -19,15 +19,18 @@ namespace Smooth.IoC.Repository.UnitOfWork
             {
                 uow.Update(entity);
             }
-            var primaryKeyValue = GetPrimaryKeyValue(entity);
-            return primaryKeyValue != null ? primaryKeyValue : default(TPk);
+
+            TPk primaryKeyValue = GetPrimaryKeyValue(entity);
+            return primaryKeyValue != null ? primaryKeyValue : default;
         }
 
         public virtual TPk SaveOrUpdate<TSession>(TEntity entity) where TSession : class, ISession
         {
-            using (var uow = Factory.Create<IUnitOfWork, TSession>())
+            using (IUnitOfWork uow = Factory.Create<IUnitOfWork, TSession>())
             {
-                return SaveOrUpdate(entity, uow);
+                TPk primaryKeyValue = SaveOrUpdate(entity, uow);
+                uow.Commit();
+                return primaryKeyValue;
             }
         }
 
@@ -43,16 +46,19 @@ namespace Smooth.IoC.Repository.UnitOfWork
                 {
                     uow.UpdateAsync(entity);
                 }
-                var primaryKeyValue = GetPrimaryKeyValue(entity);
-                return primaryKeyValue != null ? primaryKeyValue : default(TPk);
+
+                TPk primaryKeyValue = GetPrimaryKeyValue(entity);
+                return primaryKeyValue != null ? primaryKeyValue : default;
             });
         }
 
         public virtual async Task<TPk> SaveOrUpdateAsync<TSession>(TEntity entity) where TSession : class, ISession
         {
-            using (var uow = Factory.Create<IUnitOfWork, TSession>())
+            using (IUnitOfWork uow = Factory.Create<IUnitOfWork, TSession>())
             {
-                return await SaveOrUpdateAsync(entity, uow);
+                TPk primaryKeyValue = await SaveOrUpdateAsync(entity, uow);
+                uow.Commit();
+                return primaryKeyValue;
             }
         }
     }
