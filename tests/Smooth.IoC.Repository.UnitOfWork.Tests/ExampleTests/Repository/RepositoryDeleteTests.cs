@@ -79,7 +79,7 @@ namespace Smooth.IoC.Repository.UnitOfWork.Tests.ExampleTests.Repository
 
             Assert.DoesNotThrowAsync(async () =>
                 {
-                    repo.SaveOrUpdate<ITestSession>(expected);
+                    await repo.SaveOrUpdateAsync<ITestSession>(expected);
                     result = await repo.DeleteKeyAsync<ITestSession>(expected.Id);
                     resultBrave = await repo.GetAsync<ITestSession>(expected);
                 }
@@ -161,7 +161,7 @@ namespace Smooth.IoC.Repository.UnitOfWork.Tests.ExampleTests.Repository
 
             Assert.DoesNotThrowAsync(async () =>
                 {
-                    repo.SaveOrUpdate<ITestSession>(expected);
+                    await repo.SaveOrUpdateAsync<ITestSession>(expected);
                     result = await repo.DeleteAsync<ITestSession>(expected);
                     resultBrave = await repo.GetAsync<ITestSession>(expected);
                 }
