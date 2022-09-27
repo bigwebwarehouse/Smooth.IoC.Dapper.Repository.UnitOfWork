@@ -13,6 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F06EA8D2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smooth.IoC.Repository.UnitOfWork.Tests", "tests\Smooth.IoC.Repository.UnitOfWork.Tests\Smooth.IoC.Repository.UnitOfWork.Tests.csproj", "{6872809C-8759-4B48-A743-AC858B5D916C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9E29B941-3BEF-469D-863B-A59E8478EEAA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

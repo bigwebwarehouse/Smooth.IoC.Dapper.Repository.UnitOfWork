@@ -21,6 +21,7 @@ using Smooth.IoC.UnitOfWork.Interfaces;
 namespace Smooth.IoC.Repository.UnitOfWork.Tests.SpecialTests
 {
     [TestFixture]
+    [Ignore("Needs Sql")]
     public class MsSqlGuidTests
     {
         private static TestSqlForGuid TestSession;
