@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6872809C-8759-4B48-A743-AC858B5D916C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Smooth.IoC.Dapper.Repository.UnitOfWork.Tests</RootNamespace>
+    <AssemblyName>Smooth.IoC.Dapper.Repository.UnitOfWork.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExampleTests\IoC\AutofacTests.cs" />
+    <Compile Include="ExampleTests\IoC\CastleWindsorTests.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\AutofacRegistrar.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\CastleWindsorInstaller.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\NinjectBinder.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\SimpleInjectorRegistrar.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\StructureMapRegistration.cs" />
+    <Compile Include="ExampleTests\IoC\IoC_Example_Installers\UnityRegistrar.cs" />
+    <Compile Include="ExampleTests\IoC\NinjectTests.cs" />
+    <Compile Include="ExampleTests\IoC\SimpleInjectorTests.cs" />
+    <Compile Include="ExampleTests\IoC\StructureMapTests.cs" />
+    <Compile Include="ExampleTests\IoC\UnityTests.cs" />
+    <Compile Include="ExampleTests\Repository\BraveRepository.cs" />
+    <Compile Include="ExampleTests\Repository\NewRepository.cs" />
+    <Compile Include="ExampleTests\Repository\RepositoryCountTests.cs" />
+    <Compile Include="ExampleTests\Repository\RepositoryDeleteTests.cs" />
+    <Compile Include="ExampleTests\Repository\RepositoryGetAllTests.cs" />
+    <Compile Include="ExampleTests\Repository\RepositoryGetTests.cs" />
+    <Compile Include="ExampleTests\Repository\RepositoryQueryTests.cs" />
+    <Compile Include="ExampleTests\Repository\RepositorySaveOrUpdateTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialTests\DbCastTests.cs" />
+    <Compile Include="SpecialTests\DbTransactionTests.cs" />
+    <Compile Include="SpecialTests\MsSqlGuidTests.cs" />
+    <Compile Include="SpecialTests\SqlDialectHelperTests.cs" />
+    <Compile Include="SpecialTests\SqlDialectTests.cs" />
+    <Compile Include="TestHelpers\Brave.cs" />
+    <Compile Include="TestHelpers\CommonTestDataSetup.cs" />
+    <Compile Include="TestHelpers\EnumHelperTests.cs" />
+    <Compile Include="TestHelpers\FacilityHelper.cs" />
+    <Compile Include="TestHelpers\IMyDatabaseSettings.cs" />
+    <Compile Include="TestHelpers\Migrations\AddDataBraveNewWorld.cs" />
+    <Compile Include="TestHelpers\Migrations\CreateBraveNewWorld.cs" />
+    <Compile Include="TestHelpers\Migrations\MigrateDb.cs" />
+    <Compile Include="TestHelpers\MyDatabaseSettings.cs" />
+    <Compile Include="TestHelpers\New.cs" />
+    <Compile Include="TestHelpers\NoIoCFluentRegistration.cs" />
+    <Compile Include="TestHelpers\Registrations\UnityConventionRegistrar.cs" />
+    <Compile Include="TestHelpers\Registrations\UnityExtensions.cs" />
+    <Compile Include="TestHelpers\TestSession.cs" />
+    <Compile Include="TestHelpers\TestSessionMemory.cs" />
+    <Compile Include="TestHelpers\World.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="dotConnect.Express.for.PostgreSQL" Version="7.10.1086" />
+    <PackageReference Include="FakeItEasy" Version="4.5.0" />
+    <PackageReference Include="FluentAssertions" Version="5.1.2" />
+    <PackageReference Include="Microsoft.SqlServer.Compact" Version="4.0.8876.1" />
+    <PackageReference Include="MySql.Data" Version="6.10.6" />
+    <PackageReference Include="Ninject.Extensions.Conventions" Version="3.3.0" />
+    <PackageReference Include="Ninject.Extensions.Factory" Version="3.3.2" />
+    <PackageReference Include="Ninject.Extensions.Interception" Version="3.3.3" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter">
+      <Version>3.10.0</Version>
+    </PackageReference>
+    <PackageReference Include="Simple.Migrations" Version="0.9.19" />
+    <PackageReference Include="SimpleInjector" Version="4.0.12" />
+    <PackageReference Include="StructureMap" Version="4.6.1" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.107" />
+    <PackageReference Include="Unity" Version="5.6.0" />
+    <PackageReference Include="Castle.Windsor" Version="4.1.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <None Update="ConnectionSettings.json;x86\SQLite.Interop.dll;x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Smooth.IoC.Dapper.Repository.UnitOfWork\Smooth.IoC.Dapper.Repository.UnitOfWork.csproj">
+      <Project>{f1eef8c6-5fc2-447b-8a79-7f4890c2c3a1}</Project>
+      <Name>Smooth.IoC.Dapper.Repository.UnitOfWork</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\lib\Sqlite\x64\SQLite.Interop.dll">
+      <Link>x64\SQLite.Interop.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\lib\Sqlite\x86\SQLite.Interop.dll">
+      <Link>x86\SQLite.Interop.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>
