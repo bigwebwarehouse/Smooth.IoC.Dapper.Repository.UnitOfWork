@@ -23,6 +23,7 @@ namespace Smooth.IoC.UnitOfWork
             SqlDialect = session.SqlDialect;
         }
 
+        // Removed because I don't understand its usage.
         //public UnitOfWork(IDbFactory factory, IRepositoryFactory repositoryFactory, ISession session,
         //    IsolationLevel isolationLevel = IsolationLevel.RepeatableRead, bool sessionOnlyForThisUnitOfWork = false)
         //    : base(factory)
@@ -36,7 +37,7 @@ namespace Smooth.IoC.UnitOfWork
         //    Transaction = session.BeginTransaction(isolationLevel);
         //    SqlDialect = session.SqlDialect;
         //}
-
+        //
         //public TRepository GetRepository<TRepository>() where TRepository : IRepository
         //{
         //    return _repositoryFactory.GetRepository<TRepository>(this);

@@ -26,11 +26,12 @@ namespace Smooth.IoC.UnitOfWork.Interfaces
         /// </summary>
         IsolationLevel IsolationLevel { get; }
 
-        // <summary>
-        // Gets a repository implementation
-        // </summary>
-        // <typeparam name="TRepository"></typeparam>
-        // <returns></returns>
+        // Removed because I don't understand its usage.
+        ///// <summary>
+        ///// Gets a repository implementation
+        ///// </summary>
+        ///// <typeparam name="TRepository"></typeparam>
+        ///// <returns></returns>
         //TRepository GetRepository<TRepository>() where TRepository : IRepository;
 
         /// <summary>

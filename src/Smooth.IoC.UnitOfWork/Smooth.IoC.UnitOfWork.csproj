@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net452;net461;net471;netstandard1.6;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-		<Version>0.6.3</Version>
+		<Version>0.6.0</Version>
 		<PackageId>Smooth.IoC.UnitOfWork</PackageId>
 		<Authors>Rik Svendsen Rose (updated by James Winstanley)</Authors>
 		<Company>GAIT</Company>

@@ -18,18 +18,18 @@ I also want to be able to do unit (integration) testing with e.g. a Sqlite but t
 - [What are the features of the library?](#)
 - [About Dapper and Dapper.FastCRUD](#)
 - [What does this libray do?](#)
-	- [What this the package include?](#)
+    - [What this the package include?](#)
 - [Code Examples: Sessions, Repositories and UnitOfWork](#)
-		- [Session and ISession](#)
-		- [Repository and IRepository](#)
-		- [Using Session and UnitOFWork in a class/method](#)
+        - [Session and ISession](#)
+        - [Repository and IRepository](#)
+        - [Using Session and UnitOFWork in a class/method](#)
 - [Code Examples: IoC registration](#)
-	- [Autofac registration](#Autofac-registration)  
-	- [Castle Windsor Installer](#Castle-Windsor-Installer)  
-	- [Ninject registration](#Ninject-registration)  
-	- [Autofac registration](#Autofac-registration)  
-	- [Structure Map registration](#Structure-Map-registration)  
-	- [Unity registration](#Unity-registration)  
+    - [Autofac registration](#Autofac-registration)  
+    - [Castle Windsor Installer](#Castle-Windsor-Installer)  
+    - [Ninject registration](#Ninject-registration)  
+    - [Autofac registration](#Autofac-registration)  
+    - [Structure Map registration](#Structure-Map-registration)  
+    - [Unity registration](#Unity-registration)  
 - [Version History](#Version-History)
 
 
@@ -92,17 +92,17 @@ You are welcome to look at the unit tests for examples or look below in this rea
 So what i have done/created is this:
 
 1. **IDbFactory** is a simple interface that you register with your IoC. It can create/spwan ISession's and IUntOfWork's. But primary used in code to spawn Sessions or UnitofWork's with an attached session.
-2. **ISession&lt;TDatabase&gt;** (and Session&lt;TDatabase&gt; abstraction):	Extends IDbConnection. You use it to extend your Database connection / Session type. Yours session classes 
+2. **ISession&lt;TDatabase&gt;** (and Session&lt;TDatabase&gt; abstraction): Extends IDbConnection. You use it to extend your Database connection / Session type. Yours session classes 
 and interfaces require a connection string. So If you have multiple database connections, you need 1 ISession and Session extended Interface and class per database. When the session is 
 created by the factory it connects to the database, when it disposes it discontects and disposes. For Castle Windsor it also untracks the object. You can use the session for any IDbConnection or dapper (or extension) framework you like, as ISession extends IDbConnection ;-). 
 The ISession also has a Dapper.FastCRUD extension so the SqlDialect is automatically set for the enitity depending on the connection.
 3. **IUnitOfWork** (and UnitOfWork): Extends IDbTransaction. You don't need to extend anything with this. When you have created a session in you code, you can create a uow from the session. Then the session is created by the factory it begins a transaction (isolation i a parameter), when it disposes it commits (roleback on exception) and disposes. For Castle Windsor it also untracks the object. ;-).
 The IUnitOfWork also has a Dapper.FastCRUD extension so the SqlDialect is automatically set for the enitity depending on the connection.
-4. **IRepository&lt;TSession, TEntity, TPk&gt;** (Repository&lt;TSession, TEntity, TPk&gt; abstraction):	Is a default repository that you extend with your own repository for each of 
+4. **IRepository&lt;TSession, TEntity, TPk&gt;** (Repository&lt;TSession, TEntity, TPk&gt; abstraction): Is a default repository that you extend with your own repository for each of 
 the entities you want a repository for. There as some builtin methods e.g. GetAll, Get, and SaveOrUpdate. You can add the methods you need for your entity using any IDbConnection framework. 
  have used [dapper-dot-net](https://github.com/StackExchange/dapper-dot-net) and [dapper.FastCRUD](https://github.com/MoonStorm/Dapper.FastCRUD) for the quering.
 5. **IEntity&lt;TPk&gt;**: An interface for your Entities so you always have a Id key defined. You can make your entities as you please. this is only to help you.
-6. **IRepositoryBase** (and RepositoryBase&lt;TEntity&gt; abstraction):	This is a vanilla base repository, you can use it if you do not want to use Dapper or Dapper.FastCRUD. 
+6. **IRepositoryBase** (and RepositoryBase&lt;TEntity&gt; abstraction): This is a vanilla base repository, you can use it if you do not want to use Dapper or Dapper.FastCRUD. 
 It includes an protected method to set the dialect which you will need to do, if you want to use FastCRUD.
 
 # Code Examples: Sessions, Repositories and UnitOfWork
@@ -169,39 +169,41 @@ public class BraveRepository : Repository&lt;Brave, int&gt;, IBraveRepository
 ### Using Session and UnitOFWork in a class/method
 Below is an examples of a the factory spawning a session and the session (using its injected factory) to spawn a UoW.  
 Here we create a session to get data, and create a uow to save data.  
-*The connection and begin transaction will happen on create and close and commit will happen @disposal*
+*The connection and begin transaction will happen on create and close. Remember to commit, else the transaction will be rolled back on @disposal*
 
 <pre><code>public class MyClass : IMyClass
 {
-	private readonly IDbFactory _factory;
+    private readonly IDbFactory _factory;
     private readonly IBraveRepository _repository;
 
     public MyClass(IDbFactory factory, IBraveRepository braveRepository)
     {
-		_factory = factory;
+        _factory = factory;
         _repository = braveRepository;
     }
 
-	public void DoSomething()
-	{
+    public void DoSomething()
+    {
         // Spawn a session and spawn 1-to-many UnitOFWork with the connection
-		using (var session = _factory.Create&lt;ITestSession&gt;())
+        using (var session = _factory.Create&lt;ITestSession&gt;())
         {
-			var myItem = _repository.GetKey(1, session);
+            var myItem = _repository.GetKey(1, session);
             using (var uow = session.UnitOfWork())
-			{
-				_repository.SaveOrUpdate(myItem, uow);
-			}
+            {
+                _repository.SaveOrUpdate(myItem, uow);
+                uow.Commit();
+            }
             var myItem = _repository.GetKey(myItem.Id, session);
         }
 
         // Spawn a session with a UnitOFWork. Their lifescope is the same..
         using (var uow = _factory.Create&lt;IUnitOFWork, ITestSession&gt;())
         {
-			var myItem = _repository.GetKey(1, uow);
+            var myItem = _repository.GetKey(1, uow);
             _repository.SaveOrUpdate(myItem, uow);
+            uow.Commit();
         }
-	}
+    }
 }</code></pre>
 
 Below is the simple version where we just want to get some data and the repository will created and close the connection it self.  
@@ -209,20 +211,20 @@ Below is the simple version where we just want to get some data and the reposito
 
 <pre><code>public class MyClass : IMyClass
 {
-	private readonly IDbFactory _factory;
+    private readonly IDbFactory _factory;
     private readonly IBraveRepository _repository;
 
     public MyClass(IDbFactory factory, IBraveRepository braveRepository)
     {
-		_factory = factory;
+        _factory = factory;
         _repository = braveRepository;
     }
 
     // The base repository will Spawn a session of the generic type and dispose it after the call.
-	public void DoSomething()
-	{
+    public void DoSomething()
+    {
         var myItem = _repository.GetKey&lt;ITestSession&gt;(1, session);
-	}
+    }
 }</code></pre>
 
 
@@ -235,7 +237,7 @@ Please look in the test project under "IoC_Example_Installers" for any changes o
 ## Autofac registration
 Autofac does have a factory using delegates but this does not fit the same pattern as all the other IoC. 
 So one has to wrap the factory in a concrete implementation. Luckely the concrete implementation can be internal (or even private if you like).
-Registration examples:	
+Registration examples:  
 
 <pre><code>public class AutofacRegistrar
 {
@@ -473,107 +475,80 @@ Constructor with 3 parameters is always called.
     {
         container.RegisterType&lt;IDbFactory, UnityDbFactory&gt;(new ContainerControlledLifetimeManager(),
             new InjectionConstructor(container));
-        container.RegisterType&lt;IRepositoryFactory, RepositoryFactory&gt;(new ContainerControlledLifetimeManager(),
-            new InjectionConstructor(container));
         container.RegisterType&lt;IUnitOfWork, Dapper.Repository.UnitOfWork.Data.UnitOfWork&gt;();
     }
 
     sealed class UnityDbFactory : IDbFactory
     {
         private readonly IUnityContainer _container;
-		
         public UnityDbFactory(IUnityContainer container)
         {
             _container = container;
         }
-		
         public T Create&lt;T&gt;() where T : class, ISession
         {
             return _container.Resolve&lt;T&gt;();
         }
-
         public TUnitOfWork Create&lt;TUnitOfWork, TSession&gt;(IsolationLevel isolationLevel = IsolationLevel.Serializable) where TUnitOfWork : class, IUnitOfWork where TSession : class, ISession
         {
-            return _container.Resolve&lt;TUnitOfWork&gt;(
-                new ParameterOverride("factory", _container.Resolve&lt;IDbFactory&gt;()),
-                new ParameterOverride("repositoryFactory", _container.Resolve&lt;IRepositoryFactory&gt;()),
-                new ParameterOverride("session", Create&lt;TSession&gt;()),
-                new ParameterOverride("isolationLevel", isolationLevel),
+            return _container.Resolve&lt;TUnitOfWork&gt;(new ParameterOverride("factory", _container.Resolve&lt;IDbFactory&gt;()),
+                new ParameterOverride("session", Create&lt;TSession&gt;()), new ParameterOverride("isolationLevel", isolationLevel),
                 new ParameterOverride("sessionOnlyForThisUnitOfWork", true));
         }
-		
         public T Create&lt;T&gt;(IDbFactory factory, ISession session, IsolationLevel isolationLevel = IsolationLevel.Serializable) where T : class, IUnitOfWork
         {
-            return _container.Resolve&lt;T&gt;(
-                new ParameterOverride("factory", factory),
-                new ParameterOverride("repositoryFactory", _container.Resolve&lt;IRepositoryFactory&gt;()),
-                new ParameterOverride("session", session),
-                new ParameterOverride("isolationLevel", isolationLevel),
+            return _container.Resolve&lt;T&gt;(new ParameterOverride("factory", factory),
+                new ParameterOverride("session", session), new ParameterOverride("isolationLevel", isolationLevel),
                 new ParameterOverride("sessionOnlyForThisUnitOfWork", false));
         }
-
         public void Release(IDisposable instance)
         {
-        	_container.Teardown(instance);
-        }
-    }
-	
-    sealed class RepositoryFactory : IRepositoryFactory
-    {
-        private readonly IUnityContainer _container;
-
-        public RepositoryFactory(IUnityContainer container)
-        {
-        	_container = container;
-        }
-
-        public TRepository GetRepository&lt;TRepository&gt;(IUnitOfWork uow) where TRepository : IRepository
-        {
-        	return _container.Resolve&lt;TRepository&gt;(
-        		new ParameterOverride("uow", uow)
-        	);
+            _container.Teardown(instance);
         }
     }
 }</code></pre>
 
 # Version History
-- 0.0.x	
-	- Created Session, UnitOfWork, IDBFactory, Repository Getters and SaveOrUpdate 
-	- Castle Windsor integration
-- 0.1.x	
-	- Added examples and test for Autofac, Ninject, StructureMap, SimpleInjector and Unity. 
-	- Bug fixes. 
-	- Extended IUnitOFWork and Session for FastCRUD
+- 0.0.x 
+    - Created Session, UnitOfWork, IDBFactory, Repository Getters and SaveOrUpdate 
+    - Castle Windsor integration
+- 0.1.x 
+    - Added examples and test for Autofac, Ninject, StructureMap, SimpleInjector and Unity. 
+    - Bug fixes. 
+    - Extended IUnitOFWork and Session for FastCRUD
 - 0.2.x
-	- Bug fix with transactions and UoW extensions (0.2.69)
-	- Add UnitOfWork Creation from Factory  (0.2.73)	
-    - Change so DbConnection does not have to be passed to the repo. Instead an adhoc session made by repo has the ISession as generic (0.2.73)	
-    - Seperate Async and Sync calls (0.2.73)	
-    - Remove need for IEntity to get and set key value (0.2.73)	
+    - Bug fix with transactions and UoW extensions (0.2.69)
+    - Add UnitOfWork Creation from Factory  (0.2.73)    
+    - Change so DbConnection does not have to be passed to the repo. Instead an adhoc session made by repo has the ISession as generic (0.2.73) 
+    - Seperate Async and Sync calls (0.2.73)    
+    - Remove need for IEntity to get and set key value (0.2.73) 
 - 0.3.x (Done)
-	- Add more tests for repository calls (0.3.4)
-	- Change so it isn't allows async methods being called in repo (also for sync)  (0.3.4)
-	- Add more FastCRUD standard calls (Delete and Count) with tests in the repository  (0.3.4)
-	- Change all async tests to use AssetDoesNotThrowAsync  (0.3.4)
-	- Fixed issue where factory.Create<IUnitOFWork, ISession>() did not set the sql dialect.(0.3.0)
-	- Minimise the use of reflections in session and uow extensions  (0.3.4)
-	- Add IComparable constraint to TPk (0.3.5)
-	- Bug fixes and improved the collections not to be static (0.3.8)
-	- For Asp.Net constructor injection of session insured that a uow in session or command reopened the connection if it is closed. (0.3.9)
-	- Made UnitofWork default to IsolationLevel.RepeatableRead instead of IsolationLevel.Serializable (0.3.15)
-	- Made all repository methods be virtual so the can be overriden. (0.3.15)
-	- Add dictionaries to minimise reflections. (0.3.18)
+    - Add more tests for repository calls (0.3.4)
+    - Change so it isn't allows async methods being called in repo (also for sync)  (0.3.4)
+    - Add more FastCRUD standard calls (Delete and Count) with tests in the repository  (0.3.4)
+    - Change all async tests to use AssetDoesNotThrowAsync  (0.3.4)
+    - Fixed issue where factory.Create<IUnitOFWork, ISession>() did not set the sql dialect.(0.3.0)
+    - Minimise the use of reflections in session and uow extensions  (0.3.4)
+    - Add IComparable constraint to TPk (0.3.5)
+    - Bug fixes and improved the collections not to be static (0.3.8)
+    - For Asp.Net constructor injection of session insured that a uow in session or command reopened the connection if it is closed. (0.3.9)
+    - Made UnitofWork default to IsolationLevel.RepeatableRead instead of IsolationLevel.Serializable (0.3.15)
+    - Made all repository methods be virtual so the can be overriden. (0.3.15)
+    - Add dictionaries to minimise reflections. (0.3.18)
 - 0.4.x (Done)
-	- Make plan IEntity queries use pure dapper but maybe use FastCRUD SQL builder? (0.4.0)
-    	- Split nuspec up so Dapper and FastDapper are not resolved with Session, UnitOfWork, etc. (0.4.0)
-	- Removed IDbTransaction from Uow as it only gave problems (0.4.0)
+    - Make plan IEntity queries use pure dapper but maybe use FastCRUD SQL builder? (0.4.0)
+        - Split nuspec up so Dapper and FastDapper are not resolved with Session, UnitOfWork, etc. (0.4.0)
+    - Removed IDbTransaction from Uow as it only gave problems (0.4.0)
 - 0.5.x (Started)
-	- Update to Vs 2017 (0.5.1)
-	- Add net40 support for UnitOfWork Package (done)
-	- Make the Smooth repo use the uow nuget (done)
-	- Add where and parameter paramateres into uow and session  extensions. And expand Repository. (In Progress)
-    	- Add FastCRUD bulk methods with tests to repo.
-	- Add more Xml Summaries for all used interfaces.
-- 0.6.x (Future)
-	- Look into making Session inherit DbConnection
+    - Update to Vs 2017 (0.5.1)
+    - Add net40 support for UnitOfWork Package (done)
+    - Make the Smooth repo use the uow nuget (done)
+    - Add where and parameter paramateres into uow and session extensions, and expand Repository. (In Progress)
+        - Add FastCRUD bulk methods with tests to repo.
+    - Add more Xml Summaries for all used interfaces.
+- 0.6.x (James Winstanley)
+    - Add support for .NET Standard 2.1 and .NET 6.0.
+    - Transactions are now rolled back on disposal unless the Uow is explicitly committed. *eg. uow.Commit();*
+- 0.7.x (Future)
+    - Look into making Session inherit DbConnection
     
