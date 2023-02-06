@@ -3,16 +3,13 @@ using System.Data;
 using Smooth.IoC.UnitOfWork.Helpers;
 using Smooth.IoC.UnitOfWork.Interfaces;
 
-#pragma warning disable 618
-
 namespace Smooth.IoC.UnitOfWork.Abstractions
 {
-    public abstract class Session<TConnection> : DbConnection , ISession
+    public abstract class Session<TConnection> : DbConnection, ISession
         where TConnection : System.Data.Common.DbConnection
     {
         private readonly IDbFactory _factory;
         private readonly Guid _guid = Guid.NewGuid();
-        public SqlDialect SqlDialect { get; private set; }
 
         protected Session(IDbFactory factory, string connectionString)
             : base(factory)
@@ -28,9 +25,24 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
             Connect(connectionString);
         }
 
+        public SqlDialect SqlDialect { get; private set; }
+
+        public IUnitOfWork UnitOfWork()
+        {
+            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this);
+            return uow;
+        }
+
+        public IUnitOfWork UnitOfWork(IsolationLevel isolationLevel)
+        {
+            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this, isolationLevel);
+            return uow;
+        }
+
         private void SetDialect()
         {
             string type = typeof(TConnection).FullName?.ToLowerInvariant();
+
             if (string.IsNullOrEmpty(type))
             {
                 SqlDialect = SqlDialect.MsSql;
@@ -51,7 +63,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
             {
                 SqlDialect = SqlDialect.PostgreSql;
             }
-            else 
+            else
             {
                 SqlDialect = SqlDialect.MsSql;
             }
@@ -59,51 +71,24 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         protected void Connect(string connectionString)
         {
-            if (Connection != null)
-            {
-                return;
-            }
+            if (Connection != null) return;
             Connection = CreateInstanceHelper.Resolve<TConnection>(connectionString);
             Connection?.Open();
         }
 
-        public IUnitOfWork UnitOfWork()
-        {
-            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this);
-            return uow;
-        }
-
-        public IUnitOfWork UnitOfWork(IsolationLevel isolationLevel)
-        {
-            IUnitOfWork uow = _factory.Create<IUnitOfWork>(_factory, this, isolationLevel);
-            return uow;
-        }
-
-        protected bool Equals(Session<TConnection> other)
-        {
-            return _guid.Equals(other._guid);
-        }
+        protected bool Equals(Session<TConnection> other) => _guid.Equals(other._guid);
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Session<TConnection>) obj);
+            return obj.GetType() == GetType() && Equals((Session<TConnection>)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return _guid.GetHashCode();
-        }
+        public override int GetHashCode() => _guid.GetHashCode();
 
-        public static bool operator ==(Session<TConnection> left, Session<TConnection> right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==(Session<TConnection> left, Session<TConnection> right) => Equals(left, right);
 
-        public static bool operator !=(Session<TConnection> left, Session<TConnection> right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=(Session<TConnection> left, Session<TConnection> right) => !Equals(left, right);
     }
 }

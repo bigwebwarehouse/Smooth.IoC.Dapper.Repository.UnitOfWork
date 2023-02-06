@@ -1,5 +1,4 @@
-﻿#pragma warning disable 1591
-namespace Smooth.IoC.UnitOfWork
+﻿namespace Smooth.IoC.UnitOfWork
 {
     public enum SqlDialect
     {

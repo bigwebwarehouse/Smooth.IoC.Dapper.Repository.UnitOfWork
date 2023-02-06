@@ -10,7 +10,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
         public IDbConnection Connection { get; protected set; }
 
         public IsolationLevel IsolationLevel { get; }
-        public Guid Guid { get;  } = Guid.NewGuid();
+        public Guid Guid { get; } = Guid.NewGuid();
         protected bool Disposed;
 
         protected DbConnection(IDbFactory factory)
@@ -83,9 +83,13 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
 
         private void Dispose(bool disposing)
         {
-            if (Disposed) return;
+            if (Disposed)
+                return;
+
             Disposed = true;
-            if (!disposing) return;
+
+            if (!disposing)
+                return;
 
             try
             {

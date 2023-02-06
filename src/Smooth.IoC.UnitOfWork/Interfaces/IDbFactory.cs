@@ -22,7 +22,7 @@ namespace Smooth.IoC.UnitOfWork.Interfaces
         TUnitOfWork Create<TUnitOfWork, TSession>(IsolationLevel isolationLevel= IsolationLevel.RepeatableRead) where TUnitOfWork : class, IUnitOfWork where TSession : class, ISession;
 
         /// <summary>
-        /// Used for Session base to create UnitOfWork. Not recommeded to use in code
+        /// Used for Session base to create UnitOfWork. Not recommended to use in code
         /// </summary>
         /// <param name="factory"></param>
         /// <param name="session"></param>
@@ -33,7 +33,7 @@ namespace Smooth.IoC.UnitOfWork.Interfaces
         T Create<T>(IDbFactory factory, ISession session, IsolationLevel isolationLevel = IsolationLevel.RepeatableRead) where T : class, IUnitOfWork;
 
         /// <summary>
-        /// Release the component. Done by Sessnion and UnitOfWork on there own.
+        /// Release the component. Done by Session and UnitOfWork on there own.
         /// </summary>
         /// <param name="instance"></param>
         void Release(IDisposable instance);

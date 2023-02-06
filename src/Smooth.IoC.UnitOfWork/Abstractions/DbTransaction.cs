@@ -2,8 +2,6 @@
 using System;
 using System.Data;
 
-#pragma warning disable 618
-
 namespace Smooth.IoC.UnitOfWork.Abstractions
 {
     public abstract class DbTransaction : IDisposable
@@ -21,7 +19,7 @@ namespace Smooth.IoC.UnitOfWork.Abstractions
         {
             _factory = factory;
         }
-        
+
         public void Commit()
         {
             if (Connection?.State != ConnectionState.Open || TransactionCompleted)
