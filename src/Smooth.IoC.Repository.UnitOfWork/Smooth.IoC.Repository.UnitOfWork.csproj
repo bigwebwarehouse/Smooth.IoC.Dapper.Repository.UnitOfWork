@@ -28,7 +28,7 @@
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/generik0/Smooth.IoC.Dapper.Repository.UnitOfWork</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/Generik0/Smooth.IoC.Dapper.Repository.UnitOfWork/master/logo.jpg</PackageIconUrl>
-		<RepositoryUrl>https://github.com/james-winstanley/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
+		<RepositoryUrl>https://github.com/bigwebwarehouse/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
