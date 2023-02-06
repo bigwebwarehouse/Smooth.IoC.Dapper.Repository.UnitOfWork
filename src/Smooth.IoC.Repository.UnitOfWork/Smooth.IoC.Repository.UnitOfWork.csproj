@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;net461;net471;netstandard1.6;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-		<Version>0.6.0</Version>
+		<TargetFrameworks>net48;netcoreapp3.1;netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
+		<Version>1.0.0</Version>
 		<Product>Smooth.IoC.Dapper.Repository.UnitOfWork</Product>
 		<PackageId>Smooth.IoC.Dapper.Repository.UnitOfWork</PackageId>
 		<Authors>Rik Svendsen Rose (updated by James Winstanley)</Authors>
@@ -22,7 +22,7 @@
 			* The IRepository and abstract concrete class should be used on your individual repository classes to provide simple and basic calls. But ofcasue you can add all the queries you want into your Repositories and use the dapper and dapper.FastCRUD (or any other extensions) functionality provided to you.
 			* The repository abstract classes use Dapper.FastCRUD to give you a fluent ORM experience with the most common calls.
 			* This library does not lock you to using dapper and FastCRUD, you can use any library you like that extends IDbConnection and IDbTransation, and still use the IDbFactory, ISession and IUnitOrWork.
-			* Implemented for .net 4..0, .net 4.5.2, .net 4.6.1, .net 4.7.1+, .net 1.6 standard, .net 2.0 standard+, .net 6.0.
+			* Implemented for .NET Framework 4.8, .NET Core 3.1, .NET Standard 2.1, .NET 5+.
 		</Description>
 		<PackageTags>dapper crud orm sql sqlite mysql mssql localdb postgresql poco repository unitofwork di ioc autofac castle ninject simpleinjector structuremap unity</PackageTags>
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
@@ -31,6 +31,7 @@
 		<RepositoryUrl>https://github.com/bigwebwarehouse/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
 	</PropertyGroup>
 
+	<!--
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
 		<Reference Include="System.Data" />
 		<Reference Include="System" />
@@ -112,6 +113,12 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
+	</ItemGroup>
+	-->
+
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="Dapper.FastCrud" Version="3.0.46" />
 	</ItemGroup>
 
 	<ItemGroup>

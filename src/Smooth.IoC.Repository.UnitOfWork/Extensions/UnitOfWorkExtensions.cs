@@ -1,5 +1,4 @@
-﻿#if !NET40
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper.FastCrud;
@@ -233,4 +232,3 @@ namespace Smooth.IoC.Repository.UnitOfWork.Extensions
         }
     }
 }
-#endif
