@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net48;netcoreapp3.1;netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>net48;netstandard2.1;net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
-		<ImplicitUsings>enable</ImplicitUsings>
+		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 
 		<Version>1.0.0</Version>
@@ -26,7 +26,7 @@
 			* The IRepository and abstract concrete class should be used on your individual repository classes to provide simple and basic calls. But ofcasue you can add all the queries you want into your Repositories and use the dapper and dapper.FastCRUD (or any other extensions) functionality provided to you.
 			* The repository abstract classes use Dapper.FastCRUD to give you a fluent ORM experience with the most common calls.
 			* This library does not lock you to using dapper and FastCRUD, you can use any library you like that extends IDbConnection and IDbTransation, and still use the IDbFactory, ISession and IUnitOrWork.
-			* Implemented for .NET Framework 4.8, .NET Core 3.1, .NET Standard 2.1, .NET 5+.
+			* Implemented for .NET Framework 4.8, .NET Standard 2.1, .NET 6.0, .NET 7.0.
 		</Description>
 		<PackageTags>dapper crud orm sql sqlite mysql mssql localdb postgresql poco repository unitofwork di ioc autofac castle ninject simpleinjector structuremap unity</PackageTags>
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
@@ -122,7 +122,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.0.123" />
-		<PackageReference Include="Dapper.FastCrud" Version="3.0.46" />
+		<PackageReference Include="Dapper.FastCrud" Version="2.6.7" />
 	</ItemGroup>
 
 	<ItemGroup>

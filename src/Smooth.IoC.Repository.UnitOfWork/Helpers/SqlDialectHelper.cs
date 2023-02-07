@@ -1,47 +1,50 @@
 ﻿using Dapper.FastCrud;
+using Dapper.FastCrud.Mappings;
 using Smooth.IoC.Repository.UnitOfWork.Containers;
 using Smooth.IoC.UnitOfWork.Helpers;
 
+namespace Smooth.IoC.Repository.UnitOfWork.Helpers;
 
-namespace Smooth.IoC.Repository.UnitOfWork.Helpers
+public sealed class SqlDialectHelper
 {
-    public sealed class SqlDialectHelper
+    private readonly object _lockSqlDialectUpdate = new();
+    private readonly SqlDialectContainer _container = SqlDialectContainer.Instance;
+
+    public void SetDialogueIfNeeded<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect) where TEntity : class
     {
-        private readonly object _lockSqlDialectUpdate = new object();
-        private readonly SqlDialectContainer _container = SqlDialectContainer.Instance;
+        SetDialogueIfNeeded<TEntity>(EnumHelper.ConvertEnumToEnum<SqlDialect>(sqlDialect));
+    }
 
-        public void SetDialogueIfNeeded<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect) where TEntity : class
+    public void SetDialogueIfNeeded<TEntity>(SqlDialect sqlDialect) where TEntity : class
+    {
+        if (_container.TryEntityIsFrozenOrDialogueIsCorrect<TEntity>())
         {
-            SetDialogueIfNeeded<TEntity>(EnumHelper.ConvertEnumToEnum<SqlDialect>(sqlDialect) );
+            return;
         }
 
-        public void SetDialogueIfNeeded<TEntity>(SqlDialect sqlDialect) where TEntity : class
+        EntityMapping<TEntity> mapping = OrmConfiguration.GetDefaultEntityMapping<TEntity>();
+        if (!mapping.IsFrozen && mapping.Dialect != sqlDialect)
         {
-            if (_container.TryEntityIsFroozenOrDialogueIsCorrect<TEntity>())
+            lock (_lockSqlDialectUpdate)
             {
-                return;
-            }
+                mapping = OrmConfiguration.GetDefaultEntityMapping<TEntity>(); //reload to be sure
+                if (mapping.IsFrozen || mapping.Dialect == sqlDialect) 
+                    return;
 
-            var mapping = OrmConfiguration.GetDefaultEntityMapping<TEntity>();
-            if (!mapping.IsFrozen && mapping.Dialect != sqlDialect)
-            {
-                lock (_lockSqlDialectUpdate)
-                {
-                    mapping = OrmConfiguration.GetDefaultEntityMapping<TEntity>(); //reload to be sure
-                    if (mapping.IsFrozen || mapping.Dialect == sqlDialect) return;
-                    mapping.SetDialect(sqlDialect);
-                }
+                mapping.SetDialect(sqlDialect);
             }
-            _container.AddEntityFroozenOrDialogueState<TEntity>(mapping.IsFrozen || mapping.Dialect == sqlDialect);
-        }
-        public bool? GetEntityState<TEntity>() where TEntity : class
-        {
-            return _container.GetState<TEntity>();
         }
 
-        public void Reset()
-        {
-            _container.Clear();
-        }
+        _container.AddEntityFrozenOrDialogueState<TEntity>(mapping.IsFrozen || mapping.Dialect == sqlDialect);
+    }
+
+    public bool? GetEntityState<TEntity>() where TEntity : class
+    {
+        return _container.GetState<TEntity>();
+    }
+
+    public void Reset()
+    {
+        _container.Clear();
     }
 }
