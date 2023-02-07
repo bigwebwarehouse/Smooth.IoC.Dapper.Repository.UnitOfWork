@@ -1,9 +1,8 @@
-﻿namespace Smooth.IoC.UnitOfWork.Interfaces
+﻿namespace Smooth.IoC.UnitOfWork.Interfaces;
+
+/// <summary>
+/// Marker interface for repositories
+/// </summary>
+public interface IRepository
 {
-    /// <summary>
-    /// Marker interface for repositories
-    /// </summary>
-    public interface IRepository
-    {
-    }
 }

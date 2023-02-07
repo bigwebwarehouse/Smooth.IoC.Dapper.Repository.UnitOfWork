@@ -1,10 +1,9 @@
-﻿namespace Smooth.IoC.UnitOfWork
+﻿namespace Smooth.IoC.UnitOfWork;
+
+public enum SqlDialect
 {
-    public enum SqlDialect
-    {
-        MsSql = 0,
-        MySql = 1,
-        SqLite = 2,
-        PostgreSql = 3
-    }
+    MsSql = 0,
+    MySql = 1,
+    SqLite = 2,
+    PostgreSql = 3
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Smooth.IoC.UnitOfWork.Interfaces
+namespace Smooth.IoC.UnitOfWork.Interfaces;
+
+public interface IEntity<TPk> where TPk : IComparable 
 {
-    public interface IEntity<TPk> where TPk : IComparable 
-    {
-        TPk Id { get; set; }
-    }
+    TPk Id { get; set; }
 }
