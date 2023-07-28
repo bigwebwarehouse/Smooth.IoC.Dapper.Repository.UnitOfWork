@@ -6,7 +6,7 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 
-		<Version>0.7.0</Version>
+		<Version>0.8.0</Version>
 		<Product>Smooth.IoC.Dapper.Repository.UnitOfWork</Product>
 		<PackageId>Smooth.IoC.Dapper.Repository.UnitOfWork</PackageId>
 		<Authors>Rik Svendsen Rose (updated by James Winstanley)</Authors>
@@ -34,6 +34,19 @@
 		<PackageIconUrl>https://raw.githubusercontent.com/Generik0/Smooth.IoC.Dapper.Repository.UnitOfWork/master/logo.jpg</PackageIconUrl>
 		<RepositoryUrl>https://github.com/bigwebwarehouse/Smooth.IoC.Dapper.Repository.UnitOfWork</RepositoryUrl>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Containers\RepositoryContainer.cs" />
+	  <Compile Remove="Helpers\SqlDialectHelper.cs" />
+	  <Compile Remove="Helpers\SqlInstance.cs" />
+	  <Compile Remove="IRepository.cs" />
+	  <Compile Remove="Repository.cs" />
+	  <Compile Remove="RepositoryCount.cs" />
+	  <Compile Remove="RepositoryDelete.cs" />
+	  <Compile Remove="RepositoryGet.cs" />
+	  <Compile Remove="RepositoryGetAll.cs" />
+	  <Compile Remove="RepositorySaveOrUpdate.cs" />
+	</ItemGroup>
 
 	<!--
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -120,13 +133,38 @@
 	</ItemGroup>
 	-->
 
-	<ItemGroup>
-		<PackageReference Include="Dapper" Version="2.0.123" />
-		<PackageReference Include="Dapper.FastCrud" Version="2.6.7" />
-	</ItemGroup>
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper.FastCrud" Version="2.6.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper.FastCrud" Version="2.6.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="Dapper.FastCrud" Version="3.1.46" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="Dapper.FastCrud" Version="3.1.46" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="Dapper.FastCrud" Version="3.1.46" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Smooth.IoC.UnitOfWork\Smooth.IoC.UnitOfWork.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Helpers\" />
 	</ItemGroup>
 
 </Project>

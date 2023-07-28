@@ -4,6 +4,7 @@ using Smooth.IoC.UnitOfWork.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dapper.FastCrud;
 
 namespace Smooth.IoC.Repository.UnitOfWork;
 

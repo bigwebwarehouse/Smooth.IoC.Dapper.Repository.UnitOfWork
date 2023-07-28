@@ -6,7 +6,7 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 
-		<Version>0.7.0</Version>
+		<Version>0.8.0</Version>
 		<PackageId>Smooth.IoC.UnitOfWork</PackageId>
 		<Authors>Rik Svendsen Rose (updated by James Winstanley)</Authors>
 		<Company>GAIT</Company>
@@ -31,7 +31,6 @@
 		<NeutralLanguage></NeutralLanguage>
 	</PropertyGroup>
 
-	<!--
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<Reference Include="System.Data" />
 		<Reference Include="System" />
@@ -39,6 +38,7 @@
 		<PackageReference Include="System.Data.Common" Version="4.3.0" />
 	</ItemGroup>
 
+  <!--
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
 		<Reference Include="System.Data" />
 		<Reference Include="System" />

@@ -34,38 +34,38 @@ public class SqlInstance
         }
     }
 
-    public IFormattable Column<TEntity>(string propertyName, EntityMapping entityMappingOverride = null)
+    public IFormattable Column<TEntity>(string propertyName, EntityMapping<TEntity> entityMappingOverride = null)
         where TEntity : class
     {
         return Sql.Column<TEntity>(propertyName, entityMappingOverride);
     }
 
     public IFormattable Column<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect, string propertyName,
-        EntityMapping entityMappingOverride = null) where TEntity : class
+        EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         return Column<TEntity>(EnumHelper.ConvertEnumToEnum<SqlDialect>(sqlDialect), propertyName,
             entityMappingOverride);
     }
 
     public IFormattable Column<TEntity>(SqlDialect sqlDialect, string propertyName,
-        EntityMapping entityMappingOverride = null) where TEntity : class
+        EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         _sqlDialectHelper.SetDialogueIfNeeded<TEntity>(sqlDialect);
         return Sql.Column<TEntity>(propertyName, entityMappingOverride);
     }
 
-    public IFormattable Table<TEntity>(EntityMapping entityMappingOverride = null) where TEntity : class
+    public IFormattable Table<TEntity>(EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         return Sql.Table<TEntity>(entityMappingOverride);
     }
 
-    public IFormattable Table<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect, EntityMapping entityMappingOverride = null)
+    public IFormattable Table<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect, EntityMapping<TEntity> entityMappingOverride = null)
         where TEntity : class
     {
         return Table<TEntity>(EnumHelper.ConvertEnumToEnum<SqlDialect>(sqlDialect), entityMappingOverride);
     }
 
-    public IFormattable Table<TEntity>(SqlDialect sqlDialect, EntityMapping entityMappingOverride = null)
+    public IFormattable Table<TEntity>(SqlDialect sqlDialect, EntityMapping<TEntity> entityMappingOverride = null)
         where TEntity : class
     {
         _sqlDialectHelper.SetDialogueIfNeeded<TEntity>(sqlDialect);
@@ -73,20 +73,20 @@ public class SqlInstance
     }
 
     public IFormattable TableAndColumn<TEntity>(string propertyName,
-        EntityMapping entityMappingOverride = null) where TEntity : class
+        EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         return Sql.TableAndColumn<TEntity>(propertyName, entityMappingOverride);
     }
 
     public IFormattable TableAndColumn<TEntity>(IoC.UnitOfWork.SqlDialect sqlDialect, string propertyName,
-        EntityMapping entityMappingOverride = null) where TEntity : class
+        EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         return TableAndColumn<TEntity>(EnumHelper.ConvertEnumToEnum<SqlDialect>(sqlDialect), propertyName,
             entityMappingOverride);
     }
 
     public IFormattable TableAndColumn<TEntity>(SqlDialect sqlDialect, string propertyName,
-        EntityMapping entityMappingOverride = null) where TEntity : class
+        EntityMapping<TEntity> entityMappingOverride = null) where TEntity : class
     {
         _sqlDialectHelper.SetDialogueIfNeeded<TEntity>(sqlDialect);
         return Sql.TableAndColumn<TEntity>(propertyName, entityMappingOverride);

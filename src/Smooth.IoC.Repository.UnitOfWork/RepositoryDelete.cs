@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.FastCrud;
 using Smooth.IoC.Repository.UnitOfWork.Extensions;
 using Smooth.IoC.UnitOfWork.Interfaces;
 using System;

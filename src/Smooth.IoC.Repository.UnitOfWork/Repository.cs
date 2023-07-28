@@ -1,6 +1,6 @@
 ﻿using Dapper.FastCrud.Mappings;
 using Smooth.IoC.Repository.UnitOfWork.Containers;
-using Smooth.IoC.Repository.UnitOfWork.Helpers;
+//using Smooth.IoC.Repository.UnitOfWork.Helpers;
 using Smooth.IoC.UnitOfWork.Abstractions;
 using Smooth.IoC.UnitOfWork.Exceptions;
 using Smooth.IoC.UnitOfWork.Helpers;
@@ -17,13 +17,13 @@ public abstract partial class Repository<TEntity, TPk> : RepositoryBase, IReposi
     where TPk : IComparable
 {
     private readonly RepositoryContainer _container = RepositoryContainer.Instance;
-    private readonly SqlDialectHelper _helper;
+    //private readonly SqlDialectHelper _helper;
 
-    protected SqlInstance Sql { get; } = SqlInstance.Instance;
+    //protected SqlInstance Sql { get; } = SqlInstance.Instance;
 
     protected Repository(IDbFactory factory) : base(factory)
     {
-        _helper = new SqlDialectHelper();
+        //_helper = new SqlDialectHelper();
     }
 
     protected bool TryAllKeysDefault(TEntity entity)
@@ -94,13 +94,13 @@ public abstract partial class Repository<TEntity, TPk> : RepositoryBase, IReposi
         return entity;
     }
 
-    protected void SetDialogueOnce<T>(IUnitOfWork uow) where T : class
-    {
-        _helper.SetDialogueIfNeeded<T>(uow.SqlDialect);
-    }
+    //protected void SetDialogueOnce<T>(IUnitOfWork uow) where T : class
+    //{
+    //    _helper.SetDialogueIfNeeded<T>(uow.SqlDialect);
+    //}
 
-    protected void SetDialogueOnce<T>(ISession session) where T : class
-    {
-        _helper.SetDialogueIfNeeded<T>(session.SqlDialect);
-    }
+    //protected void SetDialogueOnce<T>(ISession session) where T : class
+    //{
+    //    _helper.SetDialogueIfNeeded<T>(session.SqlDialect);
+    //}
 }

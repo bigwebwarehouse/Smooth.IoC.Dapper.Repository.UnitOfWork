@@ -3,6 +3,7 @@ using Smooth.IoC.Repository.UnitOfWork.Extensions;
 using Smooth.IoC.UnitOfWork.Interfaces;
 using System;
 using System.Threading.Tasks;
+using Dapper.FastCrud;
 
 namespace Smooth.IoC.Repository.UnitOfWork;
 

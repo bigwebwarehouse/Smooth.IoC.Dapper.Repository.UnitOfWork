@@ -1,6 +1,6 @@
 ﻿using Dapper.FastCrud;
 using Dapper.FastCrud.Configuration.StatementOptions.Builders;
-using Smooth.IoC.Repository.UnitOfWork.Helpers;
+//using Smooth.IoC.Repository.UnitOfWork.Helpers;
 using Smooth.IoC.UnitOfWork.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,14 +10,14 @@ namespace Smooth.IoC.Repository.UnitOfWork.Extensions;
 
 public static class UnitOfWorkExtensions
 {
-    private static readonly SqlDialectHelper DialogueHelper = new();
+    //private static readonly SqlDialectHelper DialogueHelper = new();
 
     public static int BulkDelete<TEntity>(
         this IUnitOfWork uow,
         Action<IConditionalBulkSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.BulkDelete<TEntity>(statement => statement.AttachToTransaction(uow.Transaction));
@@ -32,7 +32,7 @@ public static class UnitOfWorkExtensions
         object parameters)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
         return uow.Connection.BulkDelete<TEntity>(statement => statement
             .AttachToTransaction(uow.Transaction)
             .Where(whereClause)
@@ -44,7 +44,7 @@ public static class UnitOfWorkExtensions
         Action<IConditionalBulkSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.BulkDeleteAsync<TEntity>(statement =>
@@ -60,7 +60,7 @@ public static class UnitOfWorkExtensions
         object parameters)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
         return uow.Connection.BulkDeleteAsync<TEntity>(statement => statement
             .AttachToTransaction(uow.Transaction)
             .Where(whereClause)
@@ -73,7 +73,7 @@ public static class UnitOfWorkExtensions
         Action<IConditionalBulkSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.BulkUpdate(updateData,
@@ -89,7 +89,7 @@ public static class UnitOfWorkExtensions
         Action<IConditionalBulkSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.BulkUpdateAsync(updateData,
@@ -104,7 +104,7 @@ public static class UnitOfWorkExtensions
         Action<IConditionalSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.Count<TEntity>(statement => statement.AttachToTransaction(uow.Transaction));
@@ -118,7 +118,7 @@ public static class UnitOfWorkExtensions
         Action<IConditionalSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.CountAsync<TEntity>(statement => statement.AttachToTransaction(uow.Transaction));
@@ -133,7 +133,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.Delete(entityToDelete,
@@ -149,7 +149,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.DeleteAsync(entityToDelete,
@@ -164,7 +164,7 @@ public static class UnitOfWorkExtensions
         Action<IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.Find<TEntity>(statement => statement.AttachToTransaction(uow.Transaction));
@@ -178,7 +178,7 @@ public static class UnitOfWorkExtensions
         Action<IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.FindAsync<TEntity>(statement => statement.AttachToTransaction(uow.Transaction));
@@ -190,10 +190,10 @@ public static class UnitOfWorkExtensions
     public static TEntity Get<TEntity>(
         this IUnitOfWork uow,
         TEntity entityKeys,
-        Action<ISelectSqlSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
+        Action<ISelectSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.Get(entityKeys, statement => statement.AttachToTransaction(uow.Transaction));
@@ -205,10 +205,10 @@ public static class UnitOfWorkExtensions
     public static Task<TEntity> GetAsync<TEntity>(
         this IUnitOfWork uow,
         TEntity entityKeys,
-        Action<ISelectSqlSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
+        Action<ISelectSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.GetAsync(entityKeys, statement => statement.AttachToTransaction(uow.Transaction));
@@ -223,7 +223,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
         {
@@ -241,7 +241,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.InsertAsync(entityToInsert,
@@ -257,7 +257,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.Update(entityToUpdate,
@@ -283,7 +283,7 @@ public static class UnitOfWorkExtensions
         Action<IStandardSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(uow.SqlDialect);
 
         if (statementOptions is null)
             return uow.Connection.UpdateAsync(entityToUpdate,
