@@ -10,11 +10,11 @@ public abstract partial class Repository<TEntity, TPk>
     where TEntity : class
     where TPk : IComparable
 {
-    public virtual bool DeleteKey(TPk key, ISession session)
-    {
-        TEntity entity = CreateEntityAndSetKeyValue(key);
-        return session.Delete(entity);
-    }
+    //public virtual bool DeleteKey(TPk key, ISession session)
+    //{
+    //    TEntity entity = CreateEntityAndSetKeyValue(key);
+    //    return session.Delete(entity);
+    //}
 
     public virtual bool DeleteKey(TPk key, IUnitOfWork uow)
     {
@@ -35,16 +35,16 @@ public abstract partial class Repository<TEntity, TPk>
         return success;
     }
 
-    public virtual async Task<bool> DeleteKeyAsync(TPk key, ISession session)
-    {
-        if (_container.IsIEntity<TEntity, TPk>())
-            return await Task.Run(() => session.Execute(
-                $"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
-                new { Id = key }) == 1);
+    //public virtual async Task<bool> DeleteKeyAsync(TPk key, ISession session)
+    //{
+    //    if (_container.IsIEntity<TEntity, TPk>())
+    //        return await Task.Run(() => session.Execute(
+    //            $"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
+    //            new { Id = key }) == 1);
 
-        TEntity entity = CreateEntityAndSetKeyValue(key);
-        return await session.DeleteAsync(entity);
-    }
+    //    TEntity entity = CreateEntityAndSetKeyValue(key);
+    //    return await session.DeleteAsync(entity);
+    //}
 
     public virtual async Task<bool> DeleteKeyAsync(TPk key, IUnitOfWork uow)
     {
@@ -66,14 +66,14 @@ public abstract partial class Repository<TEntity, TPk>
         return success;
     }
 
-    public virtual bool Delete(TEntity entity, ISession session)
-    {
-        if (_container.IsIEntity<TEntity, TPk>())
-            return session.Execute($"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
-                new { ((IEntity<TPk>)entity).Id }) == 1;
+    //public virtual bool Delete(TEntity entity, ISession session)
+    //{
+    //    if (_container.IsIEntity<TEntity, TPk>())
+    //        return session.Execute($"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
+    //            new { ((IEntity<TPk>)entity).Id }) == 1;
 
-        return session.Delete(entity);
-    }
+    //    return session.Delete(entity);
+    //}
 
     public virtual bool Delete(TEntity entity, IUnitOfWork uow)
     {
@@ -104,14 +104,14 @@ public abstract partial class Repository<TEntity, TPk>
         return success;
     }
 
-    public virtual async Task<bool> DeleteAsync(TEntity entity, ISession session)
-    {
-        return _container.IsIEntity<TEntity, TPk>()
-            ? await Task.Run(() => session.Execute(
-                $"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
-                new { ((IEntity<TPk>)entity).Id }) == 1)
-            : await session.DeleteAsync(entity);
-    }
+    //public virtual async Task<bool> DeleteAsync(TEntity entity, ISession session)
+    //{
+    //    return _container.IsIEntity<TEntity, TPk>()
+    //        ? await Task.Run(() => session.Execute(
+    //            $"DELETE FROM {Sql.Table<TEntity>(session.SqlDialect)} WHERE Id = @Id",
+    //            new { ((IEntity<TPk>)entity).Id }) == 1)
+    //        : await session.DeleteAsync(entity);
+    //}
 
     public virtual Task<bool> DeleteAsync(TEntity entity, IUnitOfWork uow)
     {
