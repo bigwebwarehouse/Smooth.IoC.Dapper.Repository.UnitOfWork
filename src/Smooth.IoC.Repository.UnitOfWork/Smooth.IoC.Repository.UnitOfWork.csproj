@@ -36,7 +36,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Containers\RepositoryContainer.cs" />
 	  <Compile Remove="Helpers\SqlDialectHelper.cs" />
 	  <Compile Remove="Helpers\SqlInstance.cs" />
 	  <Compile Remove="IRepository.cs" />
