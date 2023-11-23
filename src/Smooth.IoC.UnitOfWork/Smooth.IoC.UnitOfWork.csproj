@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net48;netstandard2.1;net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>net48;netstandard2.1;net6.0;net7.0;net8.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 
-		<Version>0.7.0</Version>
+		<Version>8.0.0</Version>
 		<PackageId>Smooth.IoC.UnitOfWork</PackageId>
 		<Authors>Rik Svendsen Rose (updated by James Winstanley)</Authors>
 		<Company>GAIT</Company>
 		<Product>Smooth.IoC.UnitOfWork</Product>
 		<Summary>Smooth IoC UnitOfWork pattern.</Summary>
 		<Description>
-			The package  Provides a solution for the UnitOfWork patterns together with inversition of control. It is the core abstractions, interfaces and core classes that can be used for any ORM.
-			On the project site there are examples of Autofact, Castle.Windsor, Ninject, Simpleinjector, StructureMap, and Unity integration. The IoC framework is not an issue... It is ment to integrate nice and smooth like...
-			Utilize this package with: https://www.nuget.org/packages/Smooth.IoC.Dapper.Repository.UnitOfWork/
+      The package  Provides a solution for the UnitOfWork patterns together with inversition of control. It is the core abstractions, interfaces and core classes that can be used for any ORM.
+      On the project site there are examples of Autofact, Castle.Windsor, Ninject, Simpleinjector, StructureMap, and Unity integration. The IoC framework is not an issue... It is ment to integrate nice and smooth like...
+      Utilize this package with: https://www.nuget.org/packages/Smooth.IoC.Dapper.Repository.UnitOfWork/
 
-			The library gives you the building blocks to:
-			* Create Sessions from the IDbFactory in your methods, IDbFactory should be injected into your class's. As Session extends IDbConnection and will Open on the factory spawning the session and dispose the connection on disposal of the connection.
-			* Your Sessions can create UnitOfWork's. As Session extends IDbConnection and will Open on the factory spawning the session and dispose the connection on disposal of the connection.
-			* Implemented for .NET Framework 4.8, .NET Standard 2.1, .NET 6.0, .NET 7.0.
-		</Description>
+      The library gives you the building blocks to:
+      * Create Sessions from the IDbFactory in your methods, IDbFactory should be injected into your class's. As Session extends IDbConnection and will Open on the factory spawning the session and dispose the connection on disposal of the connection.
+      * Your Sessions can create UnitOfWork's. As Session extends IDbConnection and will Open on the factory spawning the session and dispose the connection on disposal of the connection.
+      * Implemented for .NET Framework 4.8, .NET Standard 2.1, .NET 6.0, .NET 7.0, .NET 8.0.
+    </Description>
 		<Copyright>Generik0 2018</Copyright>
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/generik0/Smooth.IoC.Dapper.Repository.UnitOfWork</PackageProjectUrl>
