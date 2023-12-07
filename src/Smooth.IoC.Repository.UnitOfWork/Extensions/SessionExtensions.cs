@@ -77,13 +77,13 @@ public static class SessionExtensions
         Action<IConditionalSqlStatementOptionsBuilder<TEntity>> statementOptions = null)
         where TEntity : class
     {
-        DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
+        //DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return (connection as IDbConnection).Count<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return (connection as IDbConnection).Count<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return (connection as IDbConnection).Count(statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return (connection as IDbConnection).Count(statementOptions);
 
         return (connection as IDbConnection).Count(statementOptions);
     }
@@ -95,11 +95,11 @@ public static class SessionExtensions
     {
         DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return await (connection as IDbConnection).CountAsync<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return await (connection as IDbConnection).CountAsync<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return await (connection as IDbConnection).CountAsync(statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return await (connection as IDbConnection).CountAsync(statementOptions);
 
         return await (connection as IDbConnection).CountAsync(statementOptions);
     }
@@ -131,11 +131,11 @@ public static class SessionExtensions
     {
         DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return (connection as IDbConnection).Find<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return (connection as IDbConnection).Find<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return (connection as IDbConnection).Find(statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return (connection as IDbConnection).Find(statementOptions);
 
         return (connection as IDbConnection).Find(statementOptions);
     }
@@ -147,11 +147,11 @@ public static class SessionExtensions
     {
         DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return await (connection as IDbConnection).FindAsync<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return await (connection as IDbConnection).FindAsync<TEntity>(statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return await (connection as IDbConnection).FindAsync(statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return await (connection as IDbConnection).FindAsync(statementOptions);
 
         return await (connection as IDbConnection).FindAsync(statementOptions);
     }
@@ -164,11 +164,11 @@ public static class SessionExtensions
     {
         DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return (connection as IDbConnection).Get(entityKeys, statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return (connection as IDbConnection).Get(entityKeys, statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return (connection as IDbConnection).Get(entityKeys, statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return (connection as IDbConnection).Get(entityKeys, statementOptions);
 
         return (connection as IDbConnection).Get(entityKeys, statementOptions);
     }
@@ -181,11 +181,11 @@ public static class SessionExtensions
     {
         DialogueHelper.SetDialogueIfNeeded<TEntity>(connection.SqlDialect);
 
-        if (statementOptions is null)
-            return await (connection as IDbConnection).GetAsync(entityKeys, statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
+        //if (statementOptions is null)
+        //    return await (connection as IDbConnection).GetAsync(entityKeys, statement => statement.AttachToTransaction(connection.UnitOfWork().Transaction));
 
-        statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
-        return await (connection as IDbConnection).GetAsync(entityKeys, statementOptions);
+        //statementOptions += x => x.AttachToTransaction(connection.UnitOfWork().Transaction);
+        //return await (connection as IDbConnection).GetAsync(entityKeys, statementOptions);
 
         return await (connection as IDbConnection).GetAsync(entityKeys, statementOptions);
     }
