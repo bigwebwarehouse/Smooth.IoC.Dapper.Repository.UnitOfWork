@@ -1,6 +1,6 @@
 ﻿using Dapper.FastCrud;
 using Dapper.FastCrud.Configuration.StatementOptions.Builders;
-//using Smooth.IoC.Repository.UnitOfWork.Helpers;
+using Smooth.IoC.Repository.UnitOfWork.Helpers;
 using Smooth.IoC.UnitOfWork.Interfaces;
 using System;
 using System.Collections.Generic;
